@@ -2,21 +2,27 @@ var repoContainerEl = document.querySelector("#repos-container");
 var repoSearchTerm = document.querySelector("#repo-search-term");
 
 var getUserRepos = function(user) {
-    var apiUrl = "https://api.github.com/users/" + user + "/repos";
-
-    fetch(apiUrl).then(function(response) {
+    // format the github api url
+    var apiUrl = 'https://api.github.com/users/' + user + '/repos';
+  
+    // make a get request to url
+    fetch(apiUrl)
+      .then(function(response) {
+        // request was successful
         if (response.ok) {
-            response.json().then(function(data) {
+          console.log(response);
+          response.json().then(function(data) {
+            console.log(data);
             displayRepos(data, user);
-            });
+          });
         } else {
-            alert("Error: Github User Not Found");
-        };
-  });
-  .catch(function(error) {
-      alert("Unable to connect to Github.");
-  });
-};
+          alert('Error: ' + response.statusText);
+        }
+      })
+      .catch(function(error) {
+        alert('Unable to connect to GitHub');
+      });
+  };
 
 var userFormEl = document.querySelector("#user-form");
 var nameInputEl = document.querySelector("#username");
